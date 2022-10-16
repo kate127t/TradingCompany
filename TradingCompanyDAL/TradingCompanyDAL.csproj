@@ -59,10 +59,10 @@
     <Compile Include="Concrete\ProviderDAL.cs" />
     <Compile Include="Concrete\RoleDAL.cs" />
     <Compile Include="Concrete\UserDAL.cs" />
-    <Compile Include="GoddsInStock.cs">
+    <Compile Include="Goods.cs">
       <DependentUpon>TradingCompanyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Goods.cs">
+    <Compile Include="GoodsInStock.cs">
       <DependentUpon>TradingCompanyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IGoodsDAL.cs" />

@@ -12,7 +12,7 @@ namespace TradingCompanyDAL
     using System;
     using System.Collections.Generic;
     
-    public partial class GoddsInStock
+    public partial class GoodsInStock
     {
         public int GoodsInStockID { get; set; }
         public int GoodsID { get; set; }

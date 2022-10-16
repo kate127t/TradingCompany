@@ -25,8 +25,8 @@ namespace TradingCompanyDAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<GoddsInStock> GoddsInStock { get; set; }
         public virtual DbSet<Goods> Goods { get; set; }
+        public virtual DbSet<GoodsInStock> GoodsInStock { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Provider> Provider { get; set; }
         public virtual DbSet<Role> Role { get; set; }
