@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0461b824c82b4d7ba17b0c26950a086e" Name="Diagram1">
+        <EntityTypeShape EntityType="TradingCompanyModel.GoddsInStock" Width="1.5" PointX="0.5" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradingCompanyModel.Goods" Width="1.5" PointX="1.625" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradingCompanyModel.Order" Width="1.5" PointX="2.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradingCompanyModel.Provider" Width="1.5" PointX="1.625" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradingCompanyModel.Role" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradingCompanyModel.User" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="TradingCompanyModel.FK_GoddsInStock_Goods" ManuallyRouted="false" />
+        <AssociationConnector Association="TradingCompanyModel.FK_Goods_Provider" ManuallyRouted="false" />
+        <AssociationConnector Association="TradingCompanyModel.FK_Order_Goods" ManuallyRouted="false" />
+        <AssociationConnector Association="TradingCompanyModel.FK_Order_User" ManuallyRouted="false" />
+        <AssociationConnector Association="TradingCompanyModel.FK_User_Role" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
