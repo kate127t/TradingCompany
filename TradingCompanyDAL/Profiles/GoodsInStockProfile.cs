@@ -12,7 +12,7 @@ namespace TradingCompanyDAL.Profiles
     {
         public GoodsInStockProfile()
         {
-            CreateMap<GoddsInStock, GoodsInStockDTO>().ReverseMap();
+            CreateMap<GoodsInStock, GoodsInStockDTO>().ReverseMap();
         }
     }
 }

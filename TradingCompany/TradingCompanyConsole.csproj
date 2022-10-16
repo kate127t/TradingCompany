@@ -60,5 +60,15 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TradingCompanyDAL\TradingCompanyDAL.csproj">
+      <Project>{0483eb39-5134-4b22-aaa5-587191df9b03}</Project>
+      <Name>TradingCompanyDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TradingCompanyDTO\TradingCompanyDTO.csproj">
+      <Project>{CF0855AC-A250-4F89-BB9A-CA6A51A33E55}</Project>
+      <Name>TradingCompanyDTO</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
