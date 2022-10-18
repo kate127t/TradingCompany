@@ -150,6 +150,8 @@ Choose your option:");
                         UserDTO updatedUser = userDAL.GetUserByID(id1);
                         Console.WriteLine("Write the changed first name:");
                         updatedUser.FirstName = Console.ReadLine();
+                        Console.WriteLine("Write the changed last name:");
+                        updatedUser.LastName = Console.ReadLine();
                         userDAL.UpdateUser(updatedUser);
                         break;
                     case "5":
