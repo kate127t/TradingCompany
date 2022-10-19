@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingCompanyDAL", "Tradin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingCompanyDTO", "TradingCompanyDTO\TradingCompanyDTO.csproj", "{CF0855AC-A250-4F89-BB9A-CA6A51A33E55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingCompanyTests", "TradingCompanyTests\TradingCompanyTests.csproj", "{49B9321F-F096-4694-AF47-F648CC45C606}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CF0855AC-A250-4F89-BB9A-CA6A51A33E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF0855AC-A250-4F89-BB9A-CA6A51A33E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF0855AC-A250-4F89-BB9A-CA6A51A33E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49B9321F-F096-4694-AF47-F648CC45C606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49B9321F-F096-4694-AF47-F648CC45C606}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49B9321F-F096-4694-AF47-F648CC45C606}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49B9321F-F096-4694-AF47-F648CC45C606}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

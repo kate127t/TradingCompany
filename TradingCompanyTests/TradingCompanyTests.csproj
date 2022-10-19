@@ -6,19 +6,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{554DA6FE-E273-4B8E-AF50-6712F44AAA86}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>TradingCompany</RootNamespace>
-    <AssemblyName>TradingCompany</AssemblyName>
+    <ProjectGuid>{49B9321F-F096-4694-AF47-F648CC45C606}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TradingCompanyTests</RootNamespace>
+    <AssemblyName>TradingCompanyTests</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -28,7 +27,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -52,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,8 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestsDAL\RoleDALTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -73,7 +72,7 @@
       <Name>TradingCompanyDAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\TradingCompanyDTO\TradingCompanyDTO.csproj">
-      <Project>{CF0855AC-A250-4F89-BB9A-CA6A51A33E55}</Project>
+      <Project>{cf0855ac-a250-4f89-bb9a-ca6a51a33e55}</Project>
       <Name>TradingCompanyDTO</Name>
     </ProjectReference>
   </ItemGroup>
