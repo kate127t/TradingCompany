@@ -76,6 +76,10 @@
       <Project>{CF0855AC-A250-4F89-BB9A-CA6A51A33E55}</Project>
       <Name>TradingCompanyDTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TradingCompanyTests\TradingCompanyTests.csproj">
+      <Project>{49b9321f-f096-4694-af47-f648cc45c606}</Project>
+      <Name>TradingCompanyTests</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

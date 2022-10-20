@@ -8,6 +8,7 @@ using TradingCompanyDAL.Concrete;
 using TradingCompanyDAL.Interfaces;
 using TradingCompanyDAL.Profiles;
 using TradingCompanyDTO;
+using TradingCompanyTests.TestsDAL;
 
 namespace TradingCompany
 {
@@ -22,7 +23,9 @@ namespace TradingCompany
 
         static void Main(string[] args)
         {
-            bool showMenu = true;
+            Class1 cl1 = new Class1();
+            cl1.Main();
+/*            bool showMenu = true;
             while (showMenu)
             {
                 Console.WriteLine(@"Welcome to the trading company!
@@ -49,6 +52,7 @@ Choose your option:");
 
                 }
             }
+*/
         }
 
         private static void RoleMenu()

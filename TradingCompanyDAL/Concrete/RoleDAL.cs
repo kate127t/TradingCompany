@@ -43,6 +43,7 @@ namespace TradingCompanyDAL.Concrete
             {
                 var roles = entities.Role.ToList();
                 return mapper.Map<List<RoleDTO>>(roles);
+
             }
         }
 

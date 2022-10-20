@@ -17,34 +17,64 @@ using TradingCompanyDTO;
 namespace TradingCompanyTests.TestsDAL
 {
     [TestFixture]
-    //[Transaction(TransactionOption.RequiresNew),ComVisible(true)]
 
     public class RoleDALTests 
     {
         private IMapper mapper;
+        private IRoleDAL roleDAL;
         private RoleDTO TestRole;
+        private RoleDTO CreatedRole;
 
         [OneTimeSetUp]
         public void SetUpOnce()
         {
             MapperConfiguration config = new MapperConfiguration(cfg => cfg.AddMaps(typeof(RoleProfile).Assembly));
             this.mapper = config.CreateMapper();
+            this.roleDAL = new RoleDAL(mapper);
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
             InsertTestRole();
         }
 
-        [OneTimeTearDown]
-        public void TearDownOnce()
+        [TearDown]
+        public void TearDown()
         {
             DeleteTestRole();
+            DeleteCreatedRole();
         }
 
         private void DeleteTestRole()
         {
             using (var entities = new TradingCompanyEntities())
             {
-                var roleToDelete = entities.Role.FirstOrDefault(x => x.Name == TestRole.Name);
-                entities.Role.Remove(roleToDelete);
-                entities.SaveChanges();
+                var rolesInDB = entities.Role.ToList();
+                var roles = mapper.Map<List<RoleDTO>>(rolesInDB);
+                var rolesID = roles.Select(r=> r.RoleID).ToList();
+                if (rolesID.Contains(TestRole.RoleID))
+                {
+                    var roleToDelete = entities.Role.FirstOrDefault(x => x.RoleID == TestRole.RoleID);
+                    entities.Role.Remove(roleToDelete);
+                    entities.SaveChanges();
+                }
+            }
+        }
+
+        private void DeleteCreatedRole()
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                var rolesInDB = entities.Role.ToList();
+                var roles = mapper.Map<List<RoleDTO>>(rolesInDB);
+                var rolesNames = roles.Select(r => r.RoleID).ToList();
+                if (rolesNames.Contains(CreatedRole.RoleID))
+                {
+                    var roleToDelete = entities.Role.FirstOrDefault(x => x.RoleID == CreatedRole.RoleID);
+                    entities.Role.Remove(roleToDelete);
+                    entities.SaveChanges();
+                }
             }
         }
 
@@ -64,7 +94,6 @@ namespace TradingCompanyTests.TestsDAL
         [Test]
         public void TestGetAllRoles()
         {
-            IRoleDAL roleDAL = new RoleDAL(mapper);
             var Roles = roleDAL.GetAllRoles();
 
             Assert.IsNotNull(Roles);
@@ -74,7 +103,6 @@ namespace TradingCompanyTests.TestsDAL
         [Test]
         public void TestGetRoleByID()
         {
-            IRoleDAL roleDAL = new RoleDAL(mapper);
             var RoleByID = roleDAL.GetRoleByID(TestRole.RoleID);
 
             Assert.IsNotNull(RoleByID);
@@ -84,15 +112,50 @@ namespace TradingCompanyTests.TestsDAL
         [Test]
         public void TestCreateRole()
         {
-            IRoleDAL roleDAL = new RoleDAL(mapper);
             RoleDTO newRole = new RoleDTO();
-            newRole.Name = "TestCreateRole";
-            newRole = roleDAL.CreateRole(newRole);
-            
-            //var roles = entities.Role.ToList();
-            //return mapper.Map<List<RoleDTO>>(roles);
+            newRole.Name = "CreatedRole";
+            CreatedRole = roleDAL.CreateRole(newRole);
+            List<RoleDTO> roles;
 
-            Assert.That(true);
+            using (var entities = new TradingCompanyEntities())
+            {
+                var rolesInDB = entities.Role.ToList();
+                roles = mapper.Map<List<RoleDTO>>(rolesInDB);
+            }
+
+            Assert.IsNotNull(CreatedRole);
+            Assert.Contains(newRole.Name, roles.Select(r => r.Name).ToList());
+        }
+
+        [Test]
+        public void TestUpdateRole()
+        {
+            TestRole.Name = "UpdatedTestRole";
+            roleDAL.UpdateRole(TestRole);
+            RoleDTO role;
+            using (var entities = new TradingCompanyEntities())
+            {
+                var roleInDB = entities.Role.FirstOrDefault(x => x.RoleID == TestRole.RoleID);
+                role = mapper.Map<RoleDTO>(roleInDB);
+            }
+
+            Assert.AreEqual(TestRole.Name, role.Name);
+        }
+
+        [Test]
+        public void TestDeleteRole()
+        {
+            roleDAL.DeleteRole(TestRole.RoleID);
+
+            List<RoleDTO> roles;
+
+            using (var entities = new TradingCompanyEntities())
+            {
+                var rolesInDB = entities.Role.ToList();
+                roles = mapper.Map<List<RoleDTO>>(rolesInDB);
+            }
+
+            CollectionAssert.DoesNotContain(roles.Select(r => r.RoleID).ToList(), TestRole.RoleID);
         }
     }
 }

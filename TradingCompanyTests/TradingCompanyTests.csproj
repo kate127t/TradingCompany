@@ -60,7 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestsDAL\GoodsDALTests.cs" />
+    <Compile Include="TestsDAL\GoodsInStockDALTests.cs" />
+    <Compile Include="TestsDAL\OrderDALTests.cs" />
+    <Compile Include="TestsDAL\ProviderDALTests.cs" />
     <Compile Include="TestsDAL\RoleDALTests.cs" />
+    <Compile Include="TestsDAL\UserDALTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
