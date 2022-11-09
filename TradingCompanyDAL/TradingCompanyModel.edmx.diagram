@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="TradingCompanyModel.Goods" Width="1.5" PointX="1.5" PointY="4.5" />
         <EntityTypeShape EntityType="TradingCompanyModel.GoodsInStock" Width="1.5" PointX="0.625" PointY="7.25" />
         <EntityTypeShape EntityType="TradingCompanyModel.Order" Width="1.5" PointX="2.5" PointY="7.25" />
-        <EntityTypeShape EntityType="TradingCompanyModel.Provider" Width="1.5" PointX="1.375" PointY="2.25" />
+        <EntityTypeShape EntityType="TradingCompanyModel.Provider" Width="1.5" PointX="267.625" PointY="268.375" />
         <EntityTypeShape EntityType="TradingCompanyModel.Role" Width="1.5" PointX="7.25" PointY="3.75" />
         <EntityTypeShape EntityType="TradingCompanyModel.User" Width="1.5" PointX="5" PointY="3.75" />
         <AssociationConnector Association="TradingCompanyModel.FK_Goods_Provider" />
@@ -16,6 +16,11 @@
         <AssociationConnector Association="TradingCompanyModel.FK_Order_Goods" />
         <AssociationConnector Association="TradingCompanyModel.FK_Order_User" />
         <AssociationConnector Association="TradingCompanyModel.FK_User_Role" />
+        <EntityTypeShape EntityType="TradingCompanyModel.GoodsAndProviders" Width="1.5" PointX="3.75" PointY="0.75" />
+        <AssociationConnector Association="TradingCompanyModel.FK_GoodsAndProviders_Goods" />
+        <AssociationConnector Association="TradingCompanyModel.FK_GoodsAndProviders_Provider" />
+        <AssociationConnector Association="TradingCompanyModel.FK_GoodsInStock_Provider" />
+        <AssociationConnector Association="TradingCompanyModel.FK_Order_Provider" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

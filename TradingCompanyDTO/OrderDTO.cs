@@ -10,6 +10,7 @@ namespace TradingCompanyDTO
     {
         public int OrderID { get; set; }
         public int GoodsID { get; set; }
+        public int ProviderID { get; set; }
         public int ManagerID { get; set; }
         public System.DateTime DateOrdered { get; set; }
         public System.DateTime DateArrives { get; set; }

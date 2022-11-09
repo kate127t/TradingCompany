@@ -62,6 +62,7 @@ namespace TradingCompanyDAL.Concrete
                 var orderInDB = entities.Order.FirstOrDefault(x => x.OrderID == order.OrderID);
                 //roleInDB = mapper.Map<Role>(role);
                 orderInDB.GoodsID = order.GoodsID;
+                orderInDB.ProviderID = order.ProviderID;
                 orderInDB.ManagerID = order.ManagerID;
                 orderInDB.DateOrdered = order.DateOrdered;
                 orderInDB.DateArrives = order.DateArrives;

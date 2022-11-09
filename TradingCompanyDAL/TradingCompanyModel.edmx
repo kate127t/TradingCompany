@@ -13,12 +13,22 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ProviderID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="GoodsAndProviders">
+          <Key>
+            <PropertyRef Name="GoodsAndProvidersID" />
+          </Key>
+          <Property Name="GoodsAndProvidersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GoodsID" Type="int" Nullable="false" />
+          <Property Name="ProviderID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="GoodsInStock">
           <Key>
             <PropertyRef Name="GoodsInStockID" />
           </Key>
           <Property Name="GoodsInStockID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GoodsID" Type="int" Nullable="false" />
+          <Property Name="ProviderID" Type="int" />
           <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
@@ -27,6 +37,7 @@
           </Key>
           <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GoodsID" Type="int" Nullable="false" />
+          <Property Name="ProviderID" Type="int" Nullable="false" />
           <Property Name="ManagerID" Type="int" Nullable="false" />
           <Property Name="DateOrdered" Type="datetime" Nullable="false" />
           <Property Name="DateArrives" Type="datetime" Nullable="false" />
@@ -55,23 +66,35 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="binary" MaxLength="64" Nullable="false" />
           <Property Name="Salt" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Goods_Provider">
+        <Association Name="FK_GoodsAndProviders_Goods">
+          <End Role="Goods" Type="Self.Goods" Multiplicity="1" />
+          <End Role="GoodsAndProviders" Type="Self.GoodsAndProviders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Goods">
+              <PropertyRef Name="GoodsID" />
+            </Principal>
+            <Dependent Role="GoodsAndProviders">
+              <PropertyRef Name="GoodsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsAndProviders_Provider">
           <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
-          <End Role="Goods" Type="Self.Goods" Multiplicity="*" />
+          <End Role="GoodsAndProviders" Type="Self.GoodsAndProviders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Provider">
               <PropertyRef Name="ProviderID" />
             </Principal>
-            <Dependent Role="Goods">
+            <Dependent Role="GoodsAndProviders">
               <PropertyRef Name="ProviderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_GoodsInStock_Goods">
+        <Association Name="FK_GoodsInStock_Goods1">
           <End Role="Goods" Type="Self.Goods" Multiplicity="1" />
           <End Role="GoodsInStock" Type="Self.GoodsInStock" Multiplicity="*" />
           <ReferentialConstraint>
@@ -83,7 +106,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Goods">
+        <Association Name="FK_GoodsInStock_Provider">
+          <End Role="Provider" Type="Self.Provider" Multiplicity="0..1" />
+          <End Role="GoodsInStock" Type="Self.GoodsInStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="GoodsInStock">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Goods1">
           <End Role="Goods" Type="Self.Goods" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -92,6 +127,18 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="GoodsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Provider">
+          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ProviderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -121,21 +168,34 @@
         </Association>
         <EntityContainer Name="TradingCompanyModelStoreContainer">
           <EntitySet Name="Goods" EntityType="Self.Goods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodsAndProviders" EntityType="Self.GoodsAndProviders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodsInStock" EntityType="Self.GoodsInStock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Goods_Provider" Association="Self.FK_Goods_Provider">
-            <End Role="Provider" EntitySet="Provider" />
+          <AssociationSet Name="FK_GoodsAndProviders_Goods" Association="Self.FK_GoodsAndProviders_Goods">
             <End Role="Goods" EntitySet="Goods" />
+            <End Role="GoodsAndProviders" EntitySet="GoodsAndProviders" />
           </AssociationSet>
-          <AssociationSet Name="FK_GoodsInStock_Goods" Association="Self.FK_GoodsInStock_Goods">
+          <AssociationSet Name="FK_GoodsAndProviders_Provider" Association="Self.FK_GoodsAndProviders_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="GoodsAndProviders" EntitySet="GoodsAndProviders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsInStock_Goods1" Association="Self.FK_GoodsInStock_Goods1">
             <End Role="Goods" EntitySet="Goods" />
             <End Role="GoodsInStock" EntitySet="GoodsInStock" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Goods" Association="Self.FK_Order_Goods">
+          <AssociationSet Name="FK_GoodsInStock_Provider" Association="Self.FK_GoodsInStock_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="GoodsInStock" EntitySet="GoodsInStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Goods1" Association="Self.FK_Order_Goods1">
             <End Role="Goods" EntitySet="Goods" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Provider" Association="Self.FK_Order_Provider">
+            <End Role="Provider" EntitySet="Provider" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
@@ -178,6 +238,23 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
+          <EntitySet Name="GoodsAndProviders" EntityType="TradingCompanyModel.GoodsAndProviders" />
+          <AssociationSet Name="FK_GoodsAndProviders_Goods" Association="TradingCompanyModel.FK_GoodsAndProviders_Goods">
+            <End Role="Goods" EntitySet="Goods" />
+            <End Role="GoodsAndProviders" EntitySet="GoodsAndProviders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsAndProviders_Provider" Association="TradingCompanyModel.FK_GoodsAndProviders_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="GoodsAndProviders" EntitySet="GoodsAndProviders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsInStock_Provider" Association="TradingCompanyModel.FK_GoodsInStock_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="GoodsInStock" EntitySet="GoodsInStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Provider" Association="TradingCompanyModel.FK_Order_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Goods">
           <Key>
@@ -189,6 +266,7 @@
           <NavigationProperty Name="Provider" Relationship="TradingCompanyModel.FK_Goods_Provider" FromRole="Goods" ToRole="Provider" />
           <NavigationProperty Name="GoodsInStock" Relationship="TradingCompanyModel.FK_GoodsInStock_Goods" FromRole="Goods" ToRole="GoodsInStock" />
           <NavigationProperty Name="Order" Relationship="TradingCompanyModel.FK_Order_Goods" FromRole="Goods" ToRole="Order" />
+          <NavigationProperty Name="GoodsAndProviders" Relationship="TradingCompanyModel.FK_GoodsAndProviders_Goods" FromRole="Goods" ToRole="GoodsAndProviders" />
         </EntityType>
         <EntityType Name="GoodsInStock">
           <Key>
@@ -198,6 +276,8 @@
           <Property Name="GoodsID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Goods" Relationship="TradingCompanyModel.FK_GoodsInStock_Goods" FromRole="GoodsInStock" ToRole="Goods" />
+          <Property Name="ProviderID" Type="Int32" />
+          <NavigationProperty Name="Provider" Relationship="TradingCompanyModel.FK_GoodsInStock_Provider" FromRole="GoodsInStock" ToRole="Provider" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -211,6 +291,8 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Goods" Relationship="TradingCompanyModel.FK_Order_Goods" FromRole="Order" ToRole="Goods" />
           <NavigationProperty Name="User" Relationship="TradingCompanyModel.FK_Order_User" FromRole="Order" ToRole="User" />
+          <Property Name="ProviderID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Provider" Relationship="TradingCompanyModel.FK_Order_Provider" FromRole="Order" ToRole="Provider" />
         </EntityType>
         <EntityType Name="Provider">
           <Key>
@@ -220,6 +302,9 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Goods" Relationship="TradingCompanyModel.FK_Goods_Provider" FromRole="Provider" ToRole="Goods" />
+          <NavigationProperty Name="GoodsAndProviders" Relationship="TradingCompanyModel.FK_GoodsAndProviders_Provider" FromRole="Provider" ToRole="GoodsAndProviders" />
+          <NavigationProperty Name="GoodsInStock" Relationship="TradingCompanyModel.FK_GoodsInStock_Provider" FromRole="Provider" ToRole="GoodsInStock" />
+          <NavigationProperty Name="Order" Relationship="TradingCompanyModel.FK_Order_Provider" FromRole="Provider" ToRole="Order" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -237,7 +322,7 @@
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="true" />
           <Property Name="Salt" Type="Guid" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Order" Relationship="TradingCompanyModel.FK_Order_User" FromRole="User" ToRole="Order" />
@@ -303,6 +388,65 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="GoodsAndProviders">
+          <Key>
+            <PropertyRef Name="GoodsAndProvidersID" />
+          </Key>
+          <Property Name="GoodsAndProvidersID" Type="Int32" Nullable="false" />
+          <Property Name="GoodsID" Type="Int32" Nullable="false" />
+          <Property Name="ProviderID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Goods" Relationship="TradingCompanyModel.FK_GoodsAndProviders_Goods" FromRole="GoodsAndProviders" ToRole="Goods" />
+          <NavigationProperty Name="Provider" Relationship="TradingCompanyModel.FK_GoodsAndProviders_Provider" FromRole="GoodsAndProviders" ToRole="Provider" />
+        </EntityType>
+        <Association Name="FK_GoodsAndProviders_Goods">
+          <End Type="TradingCompanyModel.Goods" Role="Goods" Multiplicity="1" />
+          <End Type="TradingCompanyModel.GoodsAndProviders" Role="GoodsAndProviders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Goods">
+              <PropertyRef Name="GoodsID" />
+            </Principal>
+            <Dependent Role="GoodsAndProviders">
+              <PropertyRef Name="GoodsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsAndProviders_Provider">
+          <End Type="TradingCompanyModel.Provider" Role="Provider" Multiplicity="1" />
+          <End Type="TradingCompanyModel.GoodsAndProviders" Role="GoodsAndProviders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="GoodsAndProviders">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsInStock_Provider">
+          <End Type="TradingCompanyModel.Provider" Role="Provider" Multiplicity="0..1" />
+          <End Type="TradingCompanyModel.GoodsInStock" Role="GoodsInStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="GoodsInStock">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Provider">
+          <End Type="TradingCompanyModel.Provider" Role="Provider" Multiplicity="1" />
+          <End Type="TradingCompanyModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -321,6 +465,7 @@
           <EntitySetMapping Name="GoodsInStock">
             <EntityTypeMapping TypeName="TradingCompanyModel.GoodsInStock">
               <MappingFragment StoreEntitySet="GoodsInStock">
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
                 <ScalarProperty Name="GoodsInStockID" ColumnName="GoodsInStockID" />
@@ -330,6 +475,7 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="TradingCompanyModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="DateArrives" ColumnName="DateArrives" />
                 <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
@@ -366,6 +512,16 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodsAndProviders">
+            <EntityTypeMapping TypeName="TradingCompanyModel.GoodsAndProviders">
+              <MappingFragment StoreEntitySet="GoodsAndProviders">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+                <ScalarProperty Name="GoodsID" ColumnName="GoodsID" />
+                <ScalarProperty Name="GoodsAndProvidersID" ColumnName="GoodsAndProvidersID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

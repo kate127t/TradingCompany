@@ -19,6 +19,7 @@ namespace TradingCompanyDAL
         {
             this.GoodsInStock = new HashSet<GoodsInStock>();
             this.Order = new HashSet<Order>();
+            this.GoodsAndProviders = new HashSet<GoodsAndProviders>();
         }
     
         public int GoodsID { get; set; }
@@ -30,5 +31,7 @@ namespace TradingCompanyDAL
         public virtual ICollection<GoodsInStock> GoodsInStock { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsAndProviders> GoodsAndProviders { get; set; }
     }
 }

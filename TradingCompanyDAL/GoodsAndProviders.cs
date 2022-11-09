@@ -12,18 +12,14 @@ namespace TradingCompanyDAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class GoodsAndProviders
     {
-        public int OrderID { get; set; }
+        public int GoodsAndProvidersID { get; set; }
         public int GoodsID { get; set; }
-        public int ManagerID { get; set; }
-        public System.DateTime DateOrdered { get; set; }
-        public System.DateTime DateArrives { get; set; }
-        public int Quantity { get; set; }
         public int ProviderID { get; set; }
+        public double Price { get; set; }
     
         public virtual Goods Goods { get; set; }
-        public virtual User User { get; set; }
         public virtual Provider Provider { get; set; }
     }
 }

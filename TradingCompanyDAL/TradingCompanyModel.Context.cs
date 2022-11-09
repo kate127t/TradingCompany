@@ -31,5 +31,6 @@ namespace TradingCompanyDAL
         public virtual DbSet<Provider> Provider { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<GoodsAndProviders> GoodsAndProviders { get; set; }
     }
 }

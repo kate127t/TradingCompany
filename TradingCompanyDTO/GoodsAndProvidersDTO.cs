@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace TradingCompanyDTO
 {
-    public class GoodsDTO
+    public class GoodsAndProvidersDTO
     {
+        public int GoodsAndProvidersID { get; set; }
         public int GoodsID { get; set; }
-        public string Name { get; set; }
+        public int ProviderID { get; set; }
     }
 }

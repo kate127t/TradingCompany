@@ -78,7 +78,7 @@ namespace TradingCompanyTests.TestsDAL
         {
             GoodsDTO goods = new GoodsDTO();
             goods.Name = "TestGoods";
-            goods.ProviderID = 7;
+            //goods.ProviderID = 7;
             using (var entities = new TradingCompanyEntities())
             {
                 var goodsInDBList = mapper.Map<Goods>(goods);
@@ -111,7 +111,7 @@ namespace TradingCompanyTests.TestsDAL
         {
             GoodsDTO newGoods = new GoodsDTO();
             newGoods.Name = "CreatedGoods";
-            newGoods.ProviderID = 7;
+            //newGoods.ProviderID = 7;
             CreatedGoods = goodsDAL.CreateGoods(newGoods);
             List<GoodsDTO> goodsList;
 

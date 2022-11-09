@@ -77,7 +77,8 @@ namespace TradingCompanyTests.TestsDAL
         private void InsertTestGoodsInStock()
         {
             GoodsInStockDTO goodsInStock = new GoodsInStockDTO();
-            goodsInStock.GoodsID = 12;
+            goodsInStock.GoodsID = 1;
+            goodsInStock.ProviderID = 1;
             goodsInStock.Quantity = 1;
             using (var entities = new TradingCompanyEntities())
             {
@@ -110,7 +111,8 @@ namespace TradingCompanyTests.TestsDAL
         public void TestCreateGoodsInStock()
         {
             GoodsInStockDTO newGoodsInStock = new GoodsInStockDTO();
-            newGoodsInStock.GoodsID = 12;
+            newGoodsInStock.GoodsID = 1;
+            newGoodsInStock.ProviderID = 1;
             newGoodsInStock.Quantity = 1;
             CreatedGoodsInStock = goodsInStockDAL.CreateGoodsInStock(newGoodsInStock);
             List<GoodsInStockDTO> goodsInStockList;

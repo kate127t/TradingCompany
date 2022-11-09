@@ -62,6 +62,7 @@ namespace TradingCompanyDAL.Concrete
                 var goodsInStockInDB = entities.GoodsInStock.FirstOrDefault(x => x.GoodsInStockID == goodsInStock.GoodsInStockID);
                 //roleInDB = mapper.Map<Role>(role);
                 goodsInStockInDB.GoodsID = goodsInStock.GoodsID;
+                goodsInStockInDB.ProviderID = goodsInStock.ProviderID;
                 goodsInStockInDB.Quantity = goodsInStock.Quantity;
                 entities.SaveChanges();
             }

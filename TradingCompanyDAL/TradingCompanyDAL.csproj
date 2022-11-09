@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\GoodsAndProvidersDAL.cs" />
     <Compile Include="Concrete\GoodsDAL.cs" />
     <Compile Include="Concrete\GoodsInStockDAL.cs" />
     <Compile Include="Concrete\OrderDAL.cs" />
@@ -69,9 +70,13 @@
     <Compile Include="Goods.cs">
       <DependentUpon>TradingCompanyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GoodsAndProviders.cs">
+      <DependentUpon>TradingCompanyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GoodsInStock.cs">
       <DependentUpon>TradingCompanyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IGoodsAndProviders.cs" />
     <Compile Include="Interfaces\IGoodsDAL.cs" />
     <Compile Include="Interfaces\IGoodsInStockDAL.cs" />
     <Compile Include="Interfaces\IOrderDAL.cs" />
@@ -81,6 +86,7 @@
     <Compile Include="Order.cs">
       <DependentUpon>TradingCompanyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Profiles\GoodsAndProvidersProfile.cs" />
     <Compile Include="Profiles\GoodsProfile.cs" />
     <Compile Include="Profiles\GoodsInStockProfile.cs" />
     <Compile Include="Profiles\OrderProfile.cs" />

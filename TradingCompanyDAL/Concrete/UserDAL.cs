@@ -62,7 +62,7 @@ namespace TradingCompanyDAL.Concrete
                 var userInDB = entities.User.FirstOrDefault(x => x.UserID == user.UserID);
                 //userInDB = mapper.Map<User>(user);
                 userInDB.Login = user.Login;
-                userInDB.Password = user.Password;
+                //userInDB.Password = user.Password;
                 userInDB.FirstName = user.FirstName;
                 userInDB.LastName = user.LastName;
                 userInDB.RoleID = user.RoleID;

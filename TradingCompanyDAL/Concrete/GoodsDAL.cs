@@ -61,7 +61,6 @@ namespace TradingCompanyDAL.Concrete
             {
                 var goodsInDB = entities.Goods.FirstOrDefault(x => x.GoodsID == goods.GoodsID);
                 goodsInDB.Name = goods.Name;
-                goodsInDB.ProviderID = goods.ProviderID;
                 entities.SaveChanges();
             }
         }

@@ -77,8 +77,9 @@ namespace TradingCompanyTests.TestsDAL
         private void InsertTestOrder()
         {
             OrderDTO order = new OrderDTO();
-            order.GoodsID = 12;
-            order.ManagerID = 63;
+            order.GoodsID = 1;
+            order.ProviderID = 1;
+            order.ManagerID = 1;
             order.DateOrdered = DateTime.Now;
             order.DateArrives = DateTime.Now;
             order.Quantity = 1;
@@ -113,8 +114,9 @@ namespace TradingCompanyTests.TestsDAL
         public void TestCreateOrder()
         {
             OrderDTO newOrder = new OrderDTO();
-            newOrder.GoodsID = 12;
-            newOrder.ManagerID = 63;
+            newOrder.GoodsID = 1;
+            newOrder.ProviderID = 1;
+            newOrder.ManagerID = 1;
             newOrder.DateOrdered = DateTime.Now;
             newOrder.DateArrives = DateTime.Now;
             newOrder.Quantity = 3;
