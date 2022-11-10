@@ -65,7 +65,7 @@ namespace TradingCompanyTests.TestsDAL
                 var providersInDB = entities.Provider.ToList();
                 var providers = mapper.Map<List<ProviderDTO>>(providersInDB);
                 var providersID = providers.Select(r => r.ProviderID).ToList();
-                if (providersID.Contains(CreatedProvider.ProviderID))
+                if (CreatedProvider != null && providersID.Contains(CreatedProvider.ProviderID))
                 {
                     var providerToDelete = entities.Provider.FirstOrDefault(x => x.ProviderID == CreatedProvider.ProviderID);
                     entities.Provider.Remove(providerToDelete);

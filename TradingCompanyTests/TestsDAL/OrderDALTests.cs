@@ -79,7 +79,7 @@ namespace TradingCompanyTests.TestsDAL
             OrderDTO order = new OrderDTO();
             order.GoodsID = 1;
             order.ProviderID = 1;
-            order.ManagerID = 1;
+            order.ManagerID = 2;
             order.DateOrdered = DateTime.Now;
             order.DateArrives = DateTime.Now;
             order.Quantity = 1;
@@ -116,7 +116,7 @@ namespace TradingCompanyTests.TestsDAL
             OrderDTO newOrder = new OrderDTO();
             newOrder.GoodsID = 1;
             newOrder.ProviderID = 1;
-            newOrder.ManagerID = 1;
+            newOrder.ManagerID = 2;
             newOrder.DateOrdered = DateTime.Now;
             newOrder.DateArrives = DateTime.Now;
             newOrder.Quantity = 3;

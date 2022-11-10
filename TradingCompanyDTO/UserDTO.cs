@@ -10,11 +10,14 @@ namespace TradingCompanyDTO
     {
         public int UserID { get; set; }
         public string Login { get; set; }
-        public string Password { get; set; }
-        public string FirstName { get; set; }
+        public byte[] Password { get; set; }
+
+        public Guid Salt { get; set; } = Guid.NewGuid();
+        
+        public string FirstName { get ; set; }
         public string LastName { get; set; }
         public int RoleID { get; set; }
-        public string ToString()
+        public override string ToString()
         {
             return UserID.ToString() + "\t"+ FirstName +"\t"+ LastName +"\t" + Login +"\t"+ Password +RoleID.ToString();
         }

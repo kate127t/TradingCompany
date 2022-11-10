@@ -11,5 +11,6 @@ namespace TradingCompanyDTO
         public int GoodsAndProvidersID { get; set; }
         public int GoodsID { get; set; }
         public int ProviderID { get; set; }
+        public double Price { get; set; }
     }
 }

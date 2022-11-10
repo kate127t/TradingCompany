@@ -16,8 +16,8 @@ namespace TradingCompanyDAL
     {
         public int GoodsInStockID { get; set; }
         public int GoodsID { get; set; }
-        public int Quantity { get; set; }
         public Nullable<int> ProviderID { get; set; }
+        public int Quantity { get; set; }
     
         public virtual Goods Goods { get; set; }
         public virtual Provider Provider { get; set; }

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TradingCompanyDAL;
@@ -65,7 +66,7 @@ namespace TradingCompanyTests.TestsDAL
                 var usersInDB = entities.User.ToList();
                 var users = mapper.Map<List<UserDTO>>(usersInDB);
                 var usersNames = users.Select(r => r.UserID).ToList();
-                if (usersNames.Contains(CreatedUser.UserID))
+                if (CreatedUser != null && usersNames.Contains(CreatedUser.UserID))
                 {
                     var userToDelete = entities.User.FirstOrDefault(x => x.UserID == CreatedUser.UserID);
                     entities.User.Remove(userToDelete);
@@ -78,10 +79,12 @@ namespace TradingCompanyTests.TestsDAL
         {
             UserDTO user = new UserDTO();
             user.Login = "TestUser";
-            user.Password = "TU12";
+            string password = "TU12";
             user.FirstName = "Test";
             user.LastName = "User";
-            user.RoleID = 235;
+            user.RoleID = 1;
+            var alg = SHA512.Create();
+            user.Password = alg.ComputeHash(Encoding.UTF8.GetBytes(password + user.Salt));
             using (var entities = new TradingCompanyEntities())
             {
                 var userInDB = mapper.Map<User>(user);
@@ -114,11 +117,11 @@ namespace TradingCompanyTests.TestsDAL
         {
             UserDTO newUser = new UserDTO();
             newUser.Login = "CreatedUser";
-            newUser.Password = "TU12";
+            string password = "TU12";
             newUser.FirstName = "Created";
             newUser.LastName = "User";
-            newUser.RoleID = 235;
-            CreatedUser = userDAL.CreateUser(newUser);
+            newUser.RoleID = 1;
+            CreatedUser = userDAL.CreateUser(newUser,password);
             List<UserDTO> users;
 
             using (var entities = new TradingCompanyEntities())

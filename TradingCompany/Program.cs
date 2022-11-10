@@ -130,7 +130,8 @@ Choose your option:");
                 {
                     case "1":
                         UserDTO user = ReadNewUserFromConsole();
-                        userDAL.CreateUser(user);
+                        string password = ReadNewUserPasswordFromConsole();
+                        userDAL.CreateUser(user,password);
                         break;
                     case "2":
                         Console.WriteLine("Enter user`s id:");
@@ -176,8 +177,8 @@ Choose your option:");
             Console.WriteLine("Enter properties of the new user:");
             Console.WriteLine("Login: ");
             user.Login = Console.ReadLine();
-            Console.WriteLine("Password: ");
-            user.Password = Console.ReadLine();
+            //Console.WriteLine("Password: ");
+            //user.Password = Console.ReadLine();
             Console.WriteLine("First name: ");
             user.FirstName = Console.ReadLine();
             Console.WriteLine("Last name: ");
@@ -185,6 +186,12 @@ Choose your option:");
             Console.WriteLine("RoleID: ");
             user.RoleID = Int32.Parse(Console.ReadLine());
             return user;
+        }
+
+        private static string ReadNewUserPasswordFromConsole()
+        {
+            Console.WriteLine("Password: ");
+            return Console.ReadLine();
         }
     }
 }

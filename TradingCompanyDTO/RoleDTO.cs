@@ -11,7 +11,7 @@ namespace TradingCompanyDTO
         public int RoleID { get; set; }
         public string Name { get; set; }
 
-        public string ToString()
+        public override string ToString()
         {
             return RoleID.ToString()+"\t"+Name;
         }

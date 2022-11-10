@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TradingCompanyDAL.Interfaces;
@@ -16,8 +17,9 @@ namespace TradingCompanyDAL.Concrete
         {
             this.mapper = mapper;
         }
-        public UserDTO CreateUser(UserDTO user)
+        public UserDTO CreateUser(UserDTO user, string password)
         {
+            user.Password = Hash(password,user.Salt.ToString());
             using (var entities = new TradingCompanyEntities())
             {
                 var userInDB = mapper.Map<User>(user);
@@ -68,6 +70,12 @@ namespace TradingCompanyDAL.Concrete
                 userInDB.RoleID = user.RoleID;
                 entities.SaveChanges();
             }
+        }
+
+        public byte[] Hash (string password,string salt)
+        {
+            var alg = SHA512.Create();
+            return alg.ComputeHash(Encoding.UTF8.GetBytes(password + salt));
         }
     }
 }

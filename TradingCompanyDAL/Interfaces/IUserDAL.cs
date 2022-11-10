@@ -9,10 +9,11 @@ namespace TradingCompanyDAL.Interfaces
 {
     public interface IUserDAL
     {
-        UserDTO CreateUser(UserDTO user);
+        UserDTO CreateUser(UserDTO user, string password);
         UserDTO GetUserByID(int id);
         List<UserDTO> GetAllUsers();
         void UpdateUser(UserDTO user);
         void DeleteUser(int id);
+        byte[] Hash(string Password, string Salt);
     }
 }

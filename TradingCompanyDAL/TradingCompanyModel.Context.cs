@@ -26,11 +26,11 @@ namespace TradingCompanyDAL
         }
     
         public virtual DbSet<Goods> Goods { get; set; }
+        public virtual DbSet<GoodsAndProviders> GoodsAndProviders { get; set; }
         public virtual DbSet<GoodsInStock> GoodsInStock { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Provider> Provider { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<GoodsAndProviders> GoodsAndProviders { get; set; }
     }
 }

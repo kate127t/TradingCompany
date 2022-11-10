@@ -17,7 +17,6 @@ namespace TradingCompanyDAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Provider()
         {
-            this.Goods = new HashSet<Goods>();
             this.GoodsAndProviders = new HashSet<GoodsAndProviders>();
             this.GoodsInStock = new HashSet<GoodsInStock>();
             this.Order = new HashSet<Order>();
@@ -27,8 +26,6 @@ namespace TradingCompanyDAL
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Goods> Goods { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsAndProviders> GoodsAndProviders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
