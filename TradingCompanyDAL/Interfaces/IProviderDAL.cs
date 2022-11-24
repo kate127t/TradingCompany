@@ -15,5 +15,7 @@ namespace TradingCompanyDAL.Interfaces
         List<ProviderDTO> GetAllProviders();
         void UpdateProvider(ProviderDTO provider);
         void DeleteProvider(int id);
+
+        List<ProviderDTO> GetListProvidersByGoodsID(int id);
     }
 }

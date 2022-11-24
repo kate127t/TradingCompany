@@ -126,7 +126,7 @@ namespace TradingCompanyTests.TestsDAL
         }
 
         [Test]
-        public void TestUpdateRole()
+        public void TestUpdateGoods()
         {
             TestGoods.Name = "UpdatedTestGoods";
             goodsDAL.UpdateGoods(TestGoods);

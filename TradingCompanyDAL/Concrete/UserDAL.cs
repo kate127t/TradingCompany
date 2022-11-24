@@ -77,6 +77,24 @@ namespace TradingCompanyDAL.Concrete
             var alg = SHA512.Create();
             return alg.ComputeHash(Encoding.UTF8.GetBytes(password + salt));
         }
+
+        public UserDTO GetUserByLogin(string login)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                var user = entities.User.FirstOrDefault(x => x.Login == login);
+                return mapper.Map<UserDTO>(user);
+            }
+        }
+
+        public bool Login(string login, string password)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                var user = entities.User.FirstOrDefault(x => x.Login == login);
+                return user!= null && user.Password.SequenceEqual(Hash(password,user.Salt.ToString()));
+            }
+        }
     }
 }
 

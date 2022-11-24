@@ -127,7 +127,7 @@ namespace TradingCompanyTests.TestsDAL
         }
 
         [Test]
-        public void TestUpdateRole()
+        public void TestUpdateGoodsInStock()
         {
             TestGoodsInStock.Quantity = 2;
             goodsInStockDAL.UpdateGoodsInStock(TestGoodsInStock);

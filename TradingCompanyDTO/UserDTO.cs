@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TradingCompanyDTO
 {
@@ -19,7 +20,7 @@ namespace TradingCompanyDTO
         public int RoleID { get; set; }
         public override string ToString()
         {
-            return UserID.ToString() + "\t"+ FirstName +"\t"+ LastName +"\t" + Login +"\t"+ Password +RoleID.ToString();
+            return UserID.ToString() + "\t"+ FirstName +"\t"+ LastName +"\t" + Login +"\t" +RoleID.ToString();
         }
     }
 }

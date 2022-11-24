@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TradingCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TradingCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Goods">
           <Key>
             <PropertyRef Name="GoodsID" />
@@ -27,7 +27,7 @@
           </Key>
           <Property Name="GoodsInStockID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GoodsID" Type="int" Nullable="false" />
-          <Property Name="ProviderID" Type="int" />
+          <Property Name="ProviderID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
@@ -69,6 +69,42 @@
           <Property Name="Salt" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TradingCompany.dbo.View_GoodsInStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_GoodsInStock">
+          <Key>
+            <PropertyRef Name="GoodsInStockID" />
+            <PropertyRef Name="GoodsName" />
+            <PropertyRef Name="ProviderName" />
+            <PropertyRef Name="Quantity" />
+          </Key>
+          <Property Name="GoodsInStockID" Type="int" Nullable="false" />
+          <Property Name="GoodsName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProviderName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TradingCompany.dbo.View_Order' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="GoodsName" />
+            <PropertyRef Name="ProviderName" />
+            <PropertyRef Name="ManagerFirstName" />
+            <PropertyRef Name="ManagerLastName" />
+            <PropertyRef Name="DateOrdered" />
+            <PropertyRef Name="DateArrives" />
+            <PropertyRef Name="Quantity" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="GoodsName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProviderName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ManagerFirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ManagerLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateOrdered" Type="datetime" Nullable="false" />
+          <Property Name="DateArrives" Type="datetime" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_GoodsAndProviders_Goods">
           <End Role="Goods" Type="Self.Goods" Multiplicity="1" />
           <End Role="GoodsAndProviders" Type="Self.GoodsAndProviders" Multiplicity="*" />
@@ -106,7 +142,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_GoodsInStock_Provider">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="0..1" />
+          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
           <End Role="GoodsInStock" Type="Self.GoodsInStock" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Provider">
@@ -173,6 +209,26 @@
           <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_GoodsInStock" EntityType="Self.View_GoodsInStock" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_GoodsInStock].[GoodsInStockID] AS [GoodsInStockID], 
+    [View_GoodsInStock].[GoodsName] AS [GoodsName], 
+    [View_GoodsInStock].[ProviderName] AS [ProviderName], 
+    [View_GoodsInStock].[Quantity] AS [Quantity]
+    FROM [dbo].[View_GoodsInStock] AS [View_GoodsInStock]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Order" EntityType="Self.View_Order" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Order].[OrderID] AS [OrderID], 
+    [View_Order].[GoodsName] AS [GoodsName], 
+    [View_Order].[ProviderName] AS [ProviderName], 
+    [View_Order].[ManagerFirstName] AS [ManagerFirstName], 
+    [View_Order].[ManagerLastName] AS [ManagerLastName], 
+    [View_Order].[DateOrdered] AS [DateOrdered], 
+    [View_Order].[DateArrives] AS [DateArrives], 
+    [View_Order].[Quantity] AS [Quantity]
+    FROM [dbo].[View_Order] AS [View_Order]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_GoodsAndProviders_Goods" Association="Self.FK_GoodsAndProviders_Goods">
             <End Role="Goods" EntitySet="Goods" />
             <End Role="GoodsAndProviders" EntitySet="GoodsAndProviders" />
@@ -206,7 +262,8 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TradingCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -237,7 +294,7 @@
           </Key>
           <Property Name="GoodsInStockID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GoodsID" Type="Int32" Nullable="false" />
-          <Property Name="ProviderID" Type="Int32" />
+          <Property Name="ProviderID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Goods" Relationship="Self.FK_GoodsInStock_Goods1" FromRole="GoodsInStock" ToRole="Goods" />
           <NavigationProperty Name="Provider" Relationship="Self.FK_GoodsInStock_Provider" FromRole="GoodsInStock" ToRole="Provider" />
@@ -290,6 +347,38 @@
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
         </EntityType>
+        <EntityType Name="View_GoodsInStock">
+          <Key>
+            <PropertyRef Name="GoodsInStockID" />
+            <PropertyRef Name="GoodsName" />
+            <PropertyRef Name="ProviderName" />
+            <PropertyRef Name="Quantity" />
+          </Key>
+          <Property Name="GoodsInStockID" Type="Int32" Nullable="false" />
+          <Property Name="GoodsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View_Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="GoodsName" />
+            <PropertyRef Name="ProviderName" />
+            <PropertyRef Name="ManagerFirstName" />
+            <PropertyRef Name="ManagerLastName" />
+            <PropertyRef Name="DateOrdered" />
+            <PropertyRef Name="DateArrives" />
+            <PropertyRef Name="Quantity" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="GoodsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ManagerFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ManagerLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOrdered" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateArrives" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+        </EntityType>
         <Association Name="FK_GoodsAndProviders_Goods">
           <End Role="Goods" Type="Self.Goods" Multiplicity="1" />
           <End Role="GoodsAndProviders" Type="Self.GoodsAndProviders" Multiplicity="*" />
@@ -339,7 +428,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_GoodsInStock_Provider">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="0..1" />
+          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
           <End Role="GoodsInStock" Type="Self.GoodsInStock" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Provider">
@@ -394,6 +483,8 @@
           <EntitySet Name="Provider" EntityType="Self.Provider" />
           <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="View_GoodsInStock" EntityType="Self.View_GoodsInStock" />
+          <EntitySet Name="View_Order" EntityType="Self.View_Order" />
           <AssociationSet Name="FK_GoodsAndProviders_Goods" Association="Self.FK_GoodsAndProviders_Goods">
             <End Role="Goods" EntitySet="Goods" />
             <End Role="GoodsAndProviders" EntitySet="GoodsAndProviders" />
@@ -501,6 +592,30 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Salt" ColumnName="Salt" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_GoodsInStock">
+            <EntityTypeMapping TypeName="TradingCompanyModel.View_GoodsInStock">
+              <MappingFragment StoreEntitySet="View_GoodsInStock">
+                <ScalarProperty Name="GoodsInStockID" ColumnName="GoodsInStockID" />
+                <ScalarProperty Name="GoodsName" ColumnName="GoodsName" />
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Order">
+            <EntityTypeMapping TypeName="TradingCompanyModel.View_Order">
+              <MappingFragment StoreEntitySet="View_Order">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="GoodsName" ColumnName="GoodsName" />
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="ManagerFirstName" ColumnName="ManagerFirstName" />
+                <ScalarProperty Name="ManagerLastName" ColumnName="ManagerLastName" />
+                <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
+                <ScalarProperty Name="DateArrives" ColumnName="DateArrives" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

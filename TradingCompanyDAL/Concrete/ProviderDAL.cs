@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using TradingCompanyDAL.Interfaces;
@@ -64,6 +66,25 @@ namespace TradingCompanyDAL.Concrete
                 providerInDB.Name = provider.Name;
                 providerInDB.PhoneNumber = provider.PhoneNumber;
                 entities.SaveChanges();
+            }
+        }
+
+        public List<ProviderDTO> GetListProvidersByGoodsID(int id)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                //ObjectSet<Provider> providers = context.Contacts;
+                //ObjectSet<SalesOrderHeader> orders = context.SalesOrderHeaders;
+                var providers =
+            from p in entities.Provider
+            join g in entities.GoodsAndProviders
+            on p.ProviderID
+            equals g.ProviderID
+            where g.GoodsID == id
+            //into Group
+            select p;
+                //var provider = entities.Provider.FirstOrDefault(x => x.ProviderID == id);
+                return mapper.Map<List<ProviderDTO>>(providers);
             }
         }
     }
